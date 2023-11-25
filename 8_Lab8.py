@@ -1,28 +1,33 @@
 import pandas as pd
 import requests
 
-def first_api(): #REDDIT API
-    client_id = "3iwTWPxViEswLNjcqb2T1Q"
+def first_api(): #REDDIT API(Yes authentication)
+    #About the Reddit API
+    #Reddit is the  Homepage of the internet
+    #OAuth Authentication
+    #HTTPS: YES
+    #We are looking at Nepal/hot and all the data from the first page.
+    client_id = "3iwTWPxViEswLNjcqb2T1Q" 
     secret_key = "9IHozPnqdNTlt4Ytwlqhe5ZOeXcj9w"
     redirect_url = 'https://www.linkedin.com/in/gaurab-baral-991333216'
-    auth = requests.auth.HTTPBasicAuth(client_id,secret_key)
+    auth = requests.auth.HTTPBasicAuth(client_id,secret_key) #the auth rquest to get authorization
     #<requests.auth.HTTPBasicAuth object at 0x000001D9E034FAD0>
-    data = {
+    data = { #my data to login
     'grant_type': 'password',
     'username': 'Beautiful-Handle-181',
     'password': 'Hahaha121212',
     'scope': 'read'
     }
-    headers = {'User-Agent': 'My/Api/0.0.1'}
-    res = requests.post('https://www.reddit.com/api/v1/access_token', auth=auth, data=data, headers=headers)
-    TOKEN = res.json()['access_token']
-    headers = {**headers, **{'Authorization': f'bearer {TOKEN}'}}
-    res = requests.get('https://oauth.reddit.com/r/Nepal/hot', headers = headers)
-    df = pd.DataFrame(columns=['subreddit', 'title', 'selftext', 'score', 'num_comments', 'author_fullname', 'link_flair_richtext'])
+    headers = {'User-Agent': 'My/Api/0.0.1'} #because reddit requires headers
+    res = requests.post('https://www.reddit.com/api/v1/access_token', auth=auth, data=data, headers=headers) #getting into the system
+    TOKEN = res.json()['access_token'] #get all access token from the content
+    headers = {**headers, **{'Authorization': f'bearer {TOKEN}'}} #change the headers format to get access
+    res = requests.get('https://oauth.reddit.com/r/Nepal/hot', headers = headers) #browse reddit.com/Nepal
+    df = pd.DataFrame(columns=['subreddit', 'title', 'selftext', 'score', 'num_comments', 'author_fullname', 'link_flair_richtext'])#our essential columns
     data_list = []
     #post['data'].keys()
-    for post in res.json()['data']["children"]:
-        data_list.append({
+    for post in res.json()['data']["children"]: #for each post in the page
+        data_list.append({ #get the essential data
             'subreddit': post['data']['subreddit'],
             'title': post['data']['title'],
             'selftext': post['data']['selftext'],
@@ -31,13 +36,18 @@ def first_api(): #REDDIT API
             'author_fullname': post['data']['author_fullname'],
             'link_flair_richtext': post['data']['link_flair_richtext']
         })
-    df = pd.DataFrame(data_list)
-    df['author_fullname'] = df['author_fullname'].str.replace('t2_', '')
+    df = pd.DataFrame(data_list) #save to a csv fine
+    df['author_fullname'] = df['author_fullname'].str.replace('t2_', '') #change the name by removing tw_
     print(df)
     print("\nFile saved as Group8_Lab8_firstAPI.csv")
     df.to_csv('Group8_Lab8_firstAPI.csv', index=False)
 
-def second_api(): #Harry Potter API
+def second_api(): #Harry Potter API(No authentication)
+    #Harry Potter is  a book and tv-series about fictional magical world and characters.
+    #About the Harry Potter API
+    #Auth: NO
+    #HTTPS: YES
+    #This gets the all characters and spells of harry potter.
     while True:
         try:
             print("---------------------------------------------------------------------------")
@@ -46,24 +56,22 @@ def second_api(): #Harry Potter API
             print("Enter a numeric value")
         if choice == 1:
             url1 = "https://hp-api.onrender.com/api/characters"
-            response = requests.get(url1)
-            data = response.json()
-            df = pd.DataFrame(data)
-            df.to_csv('Group8_Lab8_HarryPotterCharacters.csv', index=False)
+            response = requests.get(url1) #get to the api
+            data = response.json() #get the data
+            df = pd.DataFrame(data) #get the data to dataframe
+            df.to_csv('Group8_Lab8_HarryPotterCharacters.csv', index=False) #save to csv
             print(df)
             print("\nFile Saved as Group8_Lab8_HarryPotterCharacters.csv")
             second_api()
-            return df
         elif choice == 2:
             url2 = "https://hp-api.onrender.com/api/spells"
-            response2 = requests.get(url2)
-            a1 = response2.json()
-            df2 = pd.DataFrame(a1)
-            df2.to_csv('Group8_Lab8_HarryPotterSpells.csv', index=False)
+            response2 = requests.get(url2) #get to the api
+            a1 = response2.json() #get the data
+            df2 = pd.DataFrame(a1) #get the data to dataframe
+            df2.to_csv('Group8_Lab8_HarryPotterSpells.csv', index=False)#save to csv
             print(df2)
             print("\nFile Saved as Group8_Lab8_HarryPotterSpells.csv")
             second_api()
-            return df2
         elif choice == 3:
             print("Going back to the previous screen")
             break
@@ -72,28 +80,37 @@ def second_api(): #Harry Potter API
         else:
             print("Invalid choice. Please enter a valid option.")
 
-def third_api(): #DOG FACT API
+def third_api(): #DOG FACT API(No authentication)
+    #About the Dog Fact API
+    #Auth: No
+    #HTTPS: YES
+    #This is the Dog API and it provides dog facts as a service dogdog
     url = "https://dogapi.dog/api/v2/breeds"
-    response = requests.get(url)
-    data = response.json()
-    breeds_data = data.get('data', [])
-    final_data = [entry.get('attributes', {}) for entry in breeds_data]
-    df3 = pd.DataFrame(final_data)
-    columns_to_drop = ['life', 'male_weight','female_weight']
+    response = requests.get(url) #connect to API
+    data = response.json()#get data
+    breeds_data = data.get('data', []) #get all data with the value Data
+    final_data = [entry.get('attributes', {}) for entry in breeds_data] #get all attributes in the list for every breeds_data
+    df3 = pd.DataFrame(final_data) #store in the dataframe
+    columns_to_drop = ['life', 'male_weight','female_weight'] #remove these columns cause we dont need these for our purpose
     df3 = df3.drop(columns=columns_to_drop)
-    print(df3)
+    print(df3)#save to a csv file
     df3.to_csv('Group8_Lab8_DogFacts.csv', index=False)
     print("\nFile Saved as Group8_Lab8_DogFacts.csv")
 
-def fourth_api(): #CLASH OF CLANS API
+def fourth_api(): #CLASH OF CLANS API(Yes authentication)
+    #About the Clash of Clans API
+    #Clash of clans is a video game developed by supercell.
+    #Auth: apiKey
+    #HTTPS: YES
+    #This API only runs on certain IP address. So it may not work on yours.
     headers = {
     'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQ4NTUyNjc2LTEzZDgtNDBlOC05M2ZjLTcxNWFkNjNlNDVkOCIsImlhdCI6MTcwMDg2NzU5NSwic3ViIjoiZGV2ZWxvcGVyLzQ0YTJiMjU0LWRlNzQtNjBhYy0xZGY1LWU2NzYzYzM3ZGY5YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjU0Ljg2LjUwLjEzOSIsIjk4LjIyMy4xMDQuMTciXSwidHlwZSI6ImNsaWVudCJ9XX0.Md1Y08nUEjpJ1fBiIsNm_tr0Ic6NFSh0zpOTq695KNvubefmSKHZzX1MDMqm4lKlswh1HSUBEKCk_6cA_W3ZCA',
     'Accept': 'application/json'
-    }
+    }#get the aunthentication key and connect to API with the key
     response = requests.get('https://api.clashofclans.com/v1/players/%238J9P8Y0LV', headers=headers)
-    user_json = response.json()
-    df = pd.json_normalize(user_json)
-    print(df)
+    user_json = response.json() #get the json format
+    df = pd.json_normalize(user_json) #store all the json format to dataframe
+    print(df)#save to a csv file
     df.to_csv('Group8_Lab8_ClashofClans.csv', index = False)
     print("\nFile Saved as Group8_Lab8_ClashofClans.csv")
 
