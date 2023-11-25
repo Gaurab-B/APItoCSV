@@ -33,14 +33,15 @@ def first_api():
         })
     df = pd.DataFrame(data_list)
     df['author_fullname'] = df['author_fullname'].str.replace('t2_', '')
+    print(df)
+    print("\nFile saved as Group8_Lab8_firstAPI.csv")
     df.to_csv('Group8_Lab8_firstAPI.csv', index=False)
-    return df
 
 def second_api():
     while True:
         try:
             print("---------------------------------------------------------------------------")
-            choice = int(input("Enter:\n 1: For extracting information of Harry Potter Characters. \n 2: For extracting information of Harry Potter Spells. \n 3: Go Back \n 4: End the Program\n"))
+            choice = int(input("Enter:\n 1: For extracting information of Harry Potter Characters. \n 2: For extracting information of Harry Potter Spells. \n 3: Go Back \n 4: End the Program\n-------------------------------------------------------------------\n"))
         except:
             print("Enter a numeric value")
         if choice == 1:
@@ -70,5 +71,28 @@ def second_api():
             exit(1)
         else:
             print("Invalid choice. Please enter a valid option.")
-    
-second_api()
+
+def third_api():
+    pass
+
+if __name__ == "__main__":
+    while True:
+        print("-----------------------------------------------------------------------------")
+        print("Welcome to API Extraction System built by group 8. What would you like to do?")
+        print("Enter:\n1: Get Data about r/Nepal in reddit.(Extract Reddit API)\n2: Get Data about Harry Potters.(Extract Harry Potter API)\n3: Get Data about Clash of Clans.\n4: Exit")
+        print("------------------------------------------------------------------------------")
+        try:
+            choice = int(input())
+        except:
+            print("Please Enter a valid number")
+        if choice == 1:
+            first_api()
+        elif choice ==2:
+            second_api()
+        elif choice ==3:
+            third_api()
+        elif choice ==4:
+            exit()
+        else:
+            print(" Invalid choice. Please enter a valid option.")
+        
