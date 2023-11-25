@@ -36,4 +36,37 @@ def first_api():
     df.to_csv('Group8_Lab8_firstAPI.csv', index=False)
     return df
 
-print(first_api())
+def second_api():
+    while True:
+        try:
+            print("---------------------------------------------------------------------------")
+            choice = int(input("Enter:\n 1: For extracting information of Harry Potter Characters. \n 2: For extracting information of Harry Potter Spells. \n 3: Go Back \n 4: End the Program\n"))
+        except:
+            print("Enter a numeric value")
+        if choice == 1:
+            url1 = "https://hp-api.onrender.com/api/characters"
+            response = requests.get(url1)
+            data = response.json()
+            df = pd.DataFrame(data)
+            df.to_csv('Group8_Lab8_HarryPotterCharacters.csv', index=False)
+            print(df)
+            print("\nFile Saved as Group8_Lab8_HarryPotterCharacters.csv")
+            second_api()
+            return df
+        elif choice == 2:
+            url2 = "https://hp-api.onrender.com/api/spells"
+            response2 = requests.get(url2)
+            a1 = response2.json()
+            df2 = pd.DataFrame(a1)
+            df2.to_csv('Group8_Lab8_HarryPotterSpells.csv', index=False)
+            print(df2)
+            print("\nFile Saved as Group8_Lab8_HarryPotterSpells.csv")
+            second_api()
+            return df
+        elif choice == 3:
+            return
+        elif choice ==4:
+            exit(1)
+
+    
+second_api()
