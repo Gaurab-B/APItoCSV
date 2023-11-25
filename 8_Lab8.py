@@ -73,26 +73,42 @@ def second_api():
             print("Invalid choice. Please enter a valid option.")
 
 def third_api():
+    url = "https://dogapi.dog/api/v2/breeds"
+    response = requests.get(url)
+    data = response.json()
+    breeds_data = data.get('data', [])
+    final_data = [entry.get('attributes', {}) for entry in breeds_data]
+    df3 = pd.DataFrame(final_data)
+    columns_to_drop = ['life', 'male_weight','female_weight']
+    df3 = df3.drop(columns=columns_to_drop)
+    print(df3)
+    df3.to_csv('Group8_Lab8_DogFacts.csv', index=False)
+    print("\nFile Saved as Group8_Lab8_DogFacts.csv")
+
+def fourth_api():
     pass
+
 
 if __name__ == "__main__":
     while True:
         print("-----------------------------------------------------------------------------")
         print("Welcome to API Extraction System built by group 8. What would you like to do?")
-        print("Enter:\n1: Get Data about r/Nepal in reddit.(Extract Reddit API)\n2: Get Data about Harry Potters.(Extract Harry Potter API)\n3: Get Data about Clash of Clans.\n4: Exit")
+        print("Enter:\n1: Get Data about r/Nepal in reddit.(Extract Reddit API)\n2: Get Data about Harry Potters.(Extract Harry Potter API)\n3: Get Data about Dogs.(Extract Dog API)\n4: Get Data about Clash of Clans\n5: Exit")
         print("------------------------------------------------------------------------------")
         try:
             choice = int(input())
         except:
             print("Please Enter a valid number")
         if choice == 1:
-            first_api()
+            first_api() #Reddit
         elif choice ==2:
-            second_api()
+            second_api() #Harry Potter
         elif choice ==3:
-            third_api()
+            third_api() #Dog Facts
         elif choice ==4:
-            exit()
+            fourth_api()
+        elif choice ==5:
+            exit() #End the Program
         else:
             print(" Invalid choice. Please enter a valid option.")
         
