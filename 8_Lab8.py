@@ -62,11 +62,13 @@ def second_api():
             print(df2)
             print("\nFile Saved as Group8_Lab8_HarryPotterSpells.csv")
             second_api()
-            return df
+            return df2
         elif choice == 3:
-            return
-        elif choice ==4:
+            print("Going back to the previous screen")
+            break
+        elif choice == 4:
             exit(1)
-
+        else:
+            print("Invalid choice. Please enter a valid option.")
     
 second_api()
