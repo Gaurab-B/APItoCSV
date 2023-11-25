@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 
-def first_api():
+def first_api(): #REDDIT API
     client_id = "3iwTWPxViEswLNjcqb2T1Q"
     secret_key = "9IHozPnqdNTlt4Ytwlqhe5ZOeXcj9w"
     redirect_url = 'https://www.linkedin.com/in/gaurab-baral-991333216'
@@ -37,7 +37,7 @@ def first_api():
     print("\nFile saved as Group8_Lab8_firstAPI.csv")
     df.to_csv('Group8_Lab8_firstAPI.csv', index=False)
 
-def second_api():
+def second_api(): #Harry Potter API
     while True:
         try:
             print("---------------------------------------------------------------------------")
@@ -72,7 +72,7 @@ def second_api():
         else:
             print("Invalid choice. Please enter a valid option.")
 
-def third_api():
+def third_api(): #DOG FACT API
     url = "https://dogapi.dog/api/v2/breeds"
     response = requests.get(url)
     data = response.json()
@@ -85,16 +85,24 @@ def third_api():
     df3.to_csv('Group8_Lab8_DogFacts.csv', index=False)
     print("\nFile Saved as Group8_Lab8_DogFacts.csv")
 
-def fourth_api():
-    pass
+def fourth_api(): #CLASH OF CLANS API
+    headers = {
+    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQ4NTUyNjc2LTEzZDgtNDBlOC05M2ZjLTcxNWFkNjNlNDVkOCIsImlhdCI6MTcwMDg2NzU5NSwic3ViIjoiZGV2ZWxvcGVyLzQ0YTJiMjU0LWRlNzQtNjBhYy0xZGY1LWU2NzYzYzM3ZGY5YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjU0Ljg2LjUwLjEzOSIsIjk4LjIyMy4xMDQuMTciXSwidHlwZSI6ImNsaWVudCJ9XX0.Md1Y08nUEjpJ1fBiIsNm_tr0Ic6NFSh0zpOTq695KNvubefmSKHZzX1MDMqm4lKlswh1HSUBEKCk_6cA_W3ZCA',
+    'Accept': 'application/json'
+    }
+    response = requests.get('https://api.clashofclans.com/v1/players/%238J9P8Y0LV', headers=headers)
+    user_json = response.json()
+    df = pd.json_normalize(user_json)
+    print(df)
+    df.to_csv('Group8_Lab8_ClashofClans.csv', index = False)
+    print("\nFile Saved as Group8_Lab8_ClashofClans.csv")
 
-
-if __name__ == "__main__":
+if __name__ == "__main__": #Menu for the 4 API
     while True:
-        print("-----------------------------------------------------------------------------")
+        print("------------------------------------------------------------------")
         print("Welcome to API Extraction System built by group 8. What would you like to do?")
-        print("Enter:\n1: Get Data about r/Nepal in reddit.(Extract Reddit API)\n2: Get Data about Harry Potters.(Extract Harry Potter API)\n3: Get Data about Dogs.(Extract Dog API)\n4: Get Data about Clash of Clans\n5: Exit")
-        print("------------------------------------------------------------------------------")
+        print("Enter:\n1: Get Data about r/Nepal in reddit.(Extract Reddit API)\n2: Get Data about Harry Potters.(Extract Harry Potter API)\n3: Get Data about Dogs.(Extract Dog API)\n4: Get Data about Clash of Clans(Extract Clash of Clans API)\n5: Exit")
+        print("-----------------------------------------------------------------")
         try:
             choice = int(input())
         except:
