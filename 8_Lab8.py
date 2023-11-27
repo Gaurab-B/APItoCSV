@@ -48,37 +48,36 @@ def second_api(): #Harry Potter API(No authentication)
     #Auth: NO
     #HTTPS: YES
     #This gets the all characters and spells of harry potter.
-    while True:
-        try:
-            print("---------------------------------------------------------------------------")
-            choice = int(input("Enter:\n 1: For extracting information of Harry Potter Characters. \n 2: For extracting information of Harry Potter Spells. \n 3: Go Back \n 4: End the Program\n-------------------------------------------------------------------\n"))
-        except:
-            print("Enter a numeric value")
-        if choice == 1:
-            url1 = "https://hp-api.onrender.com/api/characters"
-            response = requests.get(url1) #get to the api
-            data = response.json() #get the data
-            df = pd.DataFrame(data) #get the data to dataframe
-            df.to_csv('Group8_Lab8_HarryPotterCharacters.csv', index=False) #save to csv
-            print(df)
-            print("\nFile Saved as Group8_Lab8_HarryPotterCharacters.csv")
-            second_api()
-        elif choice == 2:
-            url2 = "https://hp-api.onrender.com/api/spells"
-            response2 = requests.get(url2) #get to the api
-            a1 = response2.json() #get the data
-            df2 = pd.DataFrame(a1) #get the data to dataframe
-            df2.to_csv('Group8_Lab8_HarryPotterSpells.csv', index=False)#save to csv
-            print(df2)
-            print("\nFile Saved as Group8_Lab8_HarryPotterSpells.csv")
-            second_api()
-        elif choice == 3:
-            print("Going back to the previous screen")
-            break
-        elif choice == 4:
-            exit(1)
-        else:
-            print("Invalid choice. Please enter a valid option.")
+    try:
+        print("---------------------------------------------------------------------------")
+        choice = int(input("Enter:\n 1: For extracting information of Harry Potter Characters. \n 2: For extracting information of Harry Potter Spells. \n 3: Go Back \n 4: End the Program\n-------------------------------------------------------------------\n"))
+    except:
+        print("Enter a numeric value")
+    if choice == 1:
+        url1 = "https://hp-api.onrender.com/api/characters"
+        response = requests.get(url1) #get to the api
+        data = response.json() #get the data
+        df = pd.DataFrame(data) #get the data to dataframe
+        df.to_csv('Group8_Lab8_HarryPotterCharacters.csv', index=False) #save to csv
+        print(df)
+        print("\nFile Saved as Group8_Lab8_HarryPotterCharacters.csv")
+        second_api()
+    elif choice == 2:
+        url2 = "https://hp-api.onrender.com/api/spells"
+        response2 = requests.get(url2) #get to the api
+        a1 = response2.json() #get the data
+        df2 = pd.DataFrame(a1) #get the data to dataframe
+        df2.to_csv('Group8_Lab8_HarryPotterSpells.csv', index=False)#save to csv
+        print(df2)
+        print("\nFile Saved as Group8_Lab8_HarryPotterSpells.csv")
+        second_api()
+    elif choice == 3:
+        print("Going back to the previous screen")
+        return 
+    elif choice == 4:
+        exit(1)
+    else:
+        print("Invalid choice. Please enter a valid option.")
 
 def third_api(): #DOG FACT API(No authentication)
     #About the Dog Fact API
@@ -102,9 +101,9 @@ def fourth_api(): #CLASH OF CLANS API(Yes authentication)
     #Clash of clans is a video game developed by supercell.
     #Auth: apiKey
     #HTTPS: YES
-    #This API only runs on certain IP address. So it may not work on yours.
+    #This API only runs on certain IP address. So it may not work on your device Professor.
     headers = {
-    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQ4NTUyNjc2LTEzZDgtNDBlOC05M2ZjLTcxNWFkNjNlNDVkOCIsImlhdCI6MTcwMDg2NzU5NSwic3ViIjoiZGV2ZWxvcGVyLzQ0YTJiMjU0LWRlNzQtNjBhYy0xZGY1LWU2NzYzYzM3ZGY5YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjU0Ljg2LjUwLjEzOSIsIjk4LjIyMy4xMDQuMTciXSwidHlwZSI6ImNsaWVudCJ9XX0.Md1Y08nUEjpJ1fBiIsNm_tr0Ic6NFSh0zpOTq695KNvubefmSKHZzX1MDMqm4lKlswh1HSUBEKCk_6cA_W3ZCA',
+    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6Ijc2NzI0ZjZkLTA5NjQtNGU3MS05ZjE0LTBkYTI1ZWQ5NThjNyIsImlhdCI6MTcwMTEwMTI3MSwic3ViIjoiZGV2ZWxvcGVyLzQ0YTJiMjU0LWRlNzQtNjBhYy0xZGY1LWU2NzYzYzM3ZGY5YiIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjc0LjE0My4xODAuMjQ2Il0sInR5cGUiOiJjbGllbnQifV19.ssdO6GjHt2aIitnlE9FlLZbzCE_DRHH2M2rp6EYdK_z2axEEMhF-Vdb97vpCGSher-4UVaJRRonuwA7rshvCxg',
     'Accept': 'application/json'
     }#get the aunthentication key and connect to API with the key
     response = requests.get('https://api.clashofclans.com/v1/players/%238J9P8Y0LV', headers=headers)
@@ -114,7 +113,7 @@ def fourth_api(): #CLASH OF CLANS API(Yes authentication)
     df.to_csv('Group8_Lab8_ClashofClans.csv', index = False)
     print("\nFile Saved as Group8_Lab8_ClashofClans.csv")
 
-if __name__ == "__main__": #Menu for the 4 API
+if __name__ == "__main__": #Menu for the 4+1 API
     while True:
         print("------------------------------------------------------------------")
         print("Welcome to API Extraction System built by group 8. What would you like to do?")
